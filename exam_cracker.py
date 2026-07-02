@@ -55,10 +55,27 @@ class ExamCrackerAI:
             if task["topic"] == topic_name:
                 task["status"] = "task completed"
 
-
 cracker = ExamCrackerAI()
 cracker.setup_exam(exam_name, date_str, syllabus, hours)
 cracker.build_task()
 for task in cracker.tasks:
     print(f"{task['topic']} - {task['date']} - {task['status']}")
+
+while True:
+            action = input(" If you want to see the (current task list) type- Show," \
+            " If you want to (mark a task done) type- Done, " \
+            "If you want to (exit) type- Exit : ")
+            if action == "Show" :
+                 for task in cracker.tasks:
+                     print(f"{task['topic']} - {task['date']} - {task['status']}")
+            elif action == "Done" :
+                 topic_name = input("Enter the exact topic name that you entered before and now you got rid of !! : ")
+                 cracker.make_done(topic_name)
+
+            elif action == "Exit" :
+                 print("Wish you the best for the exam, Go break a leg !! BYIEE !")
+                 break
+            else:
+                 print("I didn't get that — try Show, Done, or Exit.") 
+
 
