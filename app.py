@@ -1,11 +1,12 @@
 from flask import Flask, request, render_template, session
 from exam_cracker import ExamCrackerAI
+import os
 
 app = Flask(__name__)
 app.secret_key = "any-random-string-here-for-now"
 
-@app.route('/', methods=['GET', 'POST'])
-def home():
+@app.route('/planner', methods=['GET', 'POST'])
+def planner():
     if request.method == 'POST':
         exam_name = request.form.get('exam_name')
         exam_date = request.form.get('exam_date')
@@ -29,5 +30,7 @@ def mark_done():
             t['status'] = 'task completed'
     session['tasks'] = tasks
     return render_template('result.html', exam_name=session.get('exam_name'), tasks=tasks)
+
 if __name__ == '__main__':
-    app.run(debug=True, port=5050)
+    port = int(os.environ.get('PORT', 5050))
+    app.run(host='0.0.0.0', port=port)
