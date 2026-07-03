@@ -5,7 +5,7 @@ import os
 app = Flask(__name__)
 app.secret_key = "any-random-string-here-for-now"
 
-@app.route('/planner', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def planner():
     if request.method == 'POST':
         exam_name = request.form.get('exam_name')
