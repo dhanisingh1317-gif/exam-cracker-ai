@@ -5,20 +5,22 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Your Master Plan: {{ exam_name }}</h1>
-<ul>
-    {% for task in tasks %}
-        <li>
-            {{task.date}} - {{task.topic}} - ({{task.status}})
-            {% if task.status == "pending"%}
-                <form method="POST" action="/mark_done" style="display:inline;">
-                    <input type="hidden" name="topic" value="{{task.topic}}">
-                    <button type="submit">Mark Done</button>
-                </form>
-            {% endif %}
-        </li>
-    {% endfor %}
-</ul>
-    <p><a href="/">Back to form</a></p>
+    <div class="container">
+        <h1>Your Master Plan: {{ exam_name }}</h1>
+        <ul>
+            {% for task in tasks %}
+                <li class="{{ 'completed' if task.status != 'pending' else '' }}">
+                    {{ task.date }} - {{ task.topic }} - ({{ task.status }})
+                    {% if task.status == "pending" %}
+                        <form method="POST" action="/mark_done" style="display:inline;">
+                            <input type="hidden" name="topic" value="{{ task.topic }}">
+                            <button type="submit" class="mark-btn">Mark Done</button>
+                        </form>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        <p><a href="/">Back to form</a></p>
+    </div>
 </body>
 </html>
