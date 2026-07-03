@@ -26,5 +26,8 @@ There is a landing page and it contains a form asking name of your exam, the dat
 3. Run: `python app.py`
 4. Visit `http://127.0.0.1:5050`
 
+## AI use
+I used Claude (AI assistant) for helping me debug errors, and explain conceps i did not understand (flask). I typed and wrote all the code myself, and I promise that !
+
 ## Built for
 Hack Club Horizons Europa
