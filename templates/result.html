@@ -4,7 +4,20 @@
     <title>Exam Cracker AI - Your Plan</title>
 </head>
 <body>
-    <h1>Got it! Exam: {{ exam_name }}</h1>
+    <h1>Your Master Plan: {{ exam_name }}</h1>
+<ul>
+    {% for task in tasks %}
+        <li>
+            {{task.date}} - {{task.topic}} - ({{task.status}})
+            {% if task.status == "pending"%}
+                <form method="POST" action="/mark_done" style="display:inline;">
+                    <input type="hidden" name="topic" value="{{task.topic}}">
+                    <button type="submit">Mark Done</button>
+                </form>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
     <p><a href="/">Back to form</a></p>
 </body>
 </html>
