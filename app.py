@@ -20,7 +20,7 @@ def planner():
         cracker = ExamCrackerAI()
         cracker.setup_exam(exam_name, exam_date, syllabus, hours)
         cracker.build_task()
-        session['tasks'] =[{"topic" : t["topic"], "date": t ["date"].isoformat(), "status": t["status"]} for t in cracker.tasks]
+        session['tasks'] =[{"topic" : t["topic"], "date": t ["date"].isoformat(), "status": t["status"], "minutes": t["minutes"]} for t in cracker.tasks]
         session['exam_name'] = exam_name
         return render_template('result.html', exam_name=exam_name, tasks=session['tasks'])
     return render_template('index.html')

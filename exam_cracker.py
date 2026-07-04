@@ -31,18 +31,46 @@ class ExamCrackerAI:
             today = datetime.date.today()
 
             for i, topic in enumerate(self.syllabus):
-                gap_days = i % days_remaining
                 study_date = today + datetime.timedelta(days=gap_days)
                 schedule.setdefault(study_date, []).append(topic)
             
             return schedule
         
         def build_task(self):
-            schedule = self.generate_schedule()
             self.tasks = []
+            schedule = self.generate_schedule()
+            total_minutes = self.hours_per_day * 60
+            learn_minutes = total_minutes // 2
+            practice_minutes = total_minutes - learn_minutes
+
             for date, topics in schedule.items():
                 for topic in topics:
-                    self.tasks.append({"topic": topic, "date": date, "status": "pending"})
+                    self.tasks.append({
+                         "topic": f"{topic} - Learn", 
+                         "date": date, 
+                         "status": "pending",
+                         "minutes": learn_minutes
+                         })
+                    self.tasks.append({
+                         "topic": f"{topic} - Practice",
+                         "date": date,
+                         "status": "pending",
+                         "minutes": practice_minutes
+                    })
+
+            self.add_revision_day()
+                
+        def add_revision_day(self):
+            revision_date = self.exam_date - datetime.timedelta(days=1)
+            total_minutes = self.hours_per_day * 60
+            per_topic_minutes = total_minutes // max(1, len(self.syllabus))
+            for topic in self.syllabus:
+                self.tasks.append({
+                    "topic": f"Rapid Revision: {topic}",
+                    "date": revision_date,
+                    "status": "pending",
+                    "minutes": per_topic_minutes
+                })    
         def make_done(self, topic_name):
             for task in self.tasks:
                 if task["topic"] == topic_name:
