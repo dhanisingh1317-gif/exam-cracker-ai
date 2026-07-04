@@ -19,15 +19,16 @@ For precission, timer is the best key to crack the exam.
 ## How it works
 There is a landing page and it contains a form asking name of your exam, the date, the topics and the the no. of hours you can study ! and focous timer to increase the productivity ! they submit the info and are directed to the Master Plan page with their schedule, they also have the option to mark it done and keep a check on the progress provided by the app.
 ## Screenshots
-![Main Page](screenshots/main-page.png)
-![Main Page Details Filled](screenshots/main-page-filled.png)
-![Result](screenshots/result.png)
-![Result 2](screenshots/result-2.png)
 ![Landing Page](screenshots/Screen1A.png)
 ![Landing Page Features](screenshots/Screem1B.png)
 ![Progress Bar](screenshots/Screen3.png)
 ![Master Plan View](screenshots/Screen4A.png)
 ![Master Plan Continued](screenshots/Screen4B.png)
+![Main Page](screenshots/main-page.png)
+![Main Page Details Filled](screenshots/main-page-filled.png)
+![Result](screenshots/result.png)
+![Result 2](screenshots/result-2.png)
+
 ## Live Demo
 [Try it here](https://exam-cracker-ai.onrender.com)
 
