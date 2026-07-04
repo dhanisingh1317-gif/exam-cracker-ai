@@ -8,11 +8,30 @@
         <div class="landing">
             <p class="tagline">calm, focused, exam-ready</p>
             <h1 class="landing-title">Exam Cracker AI</h1>
-            <p class="landing-sub">Turn your stllabus into a day-by-day study plan you will actually follow.</p>
+            <p class="landing-sub">Turn your syllabus into a day-by-day study plan you will actually follow.</p>
             <a href="/planner" class="cta-btn">Build My Plan</a>
-            
+
+            <div class="features-row">
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3 class="feature-title">Smart Scheduling</h3>
+                    <p class="feature-text">Automatically splits your syllabus across the days you have left.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📖</div>
+                    <h3 class="feature-title">Learn + Practice</h3>
+                    <p class="feature-text">Every topic gets dedicated time to learn it, then practice it.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📖</div>
+                    <h3 class="feature-title">Rapid Revision</h3>
+                    <p class="feature-text">The day before your exam is reserved for reviewing everything.</p>
+                </div>
+            </div>
+
+                 
             <div class="pomodoro">
-                <h2 class="pomodoro-title">Focus Session</h2>
+                <h2 class="pomodoro-title">Focus Timer</h2>
                 <div class="timer-display" id="timerDisplay">25:00</div>
                 <div class="timer-mode" id="timerMode">Focus Session</div>
                 <div class="timer-buttons">
@@ -21,6 +40,8 @@
                     <button type="button" id="resetBtn" class="timer-btn">Reset</button>
                 </div>
             </div>
+            
+            <p class="footer-note">Built with care for students who leave things to the last minute — no judgment.</p>
         </div>
         <script>
             let totalSeconds = 25 *60;
@@ -68,7 +89,7 @@
                 clearInterval(timerInterval);
                 isFocusMode = true;
                 totalSeconds = 25 * 60;
-                modeLabel.textContext = "Focus Session";
+                modeLabel.textContent = "Focus Session";
                 updateDisplay();
             });
         </script>

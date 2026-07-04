@@ -25,7 +25,7 @@ class ExamCrackerAI:
         def generate_schedule(self):
             days_remaining = self.days_till_exam()
             if days_remaining <= 0:
-                return{}
+                return{}, False
             
             schedule = {}
             today = datetime.date.today()
@@ -79,6 +79,12 @@ class ExamCrackerAI:
                 if task["topic"] == topic_name:
                     task["status"] = "task completed"
 #imputs by the user
+        def get_progress(self):
+            total = len(self.tasks)
+            completed = sum(1 for t in self.tasks if t["status"] == "task completed")
+            percent = int((completed / total) * 100) if total > 0 else 0
+            return {"completed":completed, "total": total, "percent": percent}
+         
 if __name__ == "__main__":
     exam_name = input("Oh no ! Exam came to trouble you ! Don't worry let me relive some stress, tell me the name of the exam: ")
     date_str = input("So.. When is this EXAM ? (YYYY.MM.DD) :")
@@ -110,6 +116,5 @@ if __name__ == "__main__":
                     break
                 else:
                     print("I didn't get that — try Show, Done, or Exit.") 
-
 
 

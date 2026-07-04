@@ -40,7 +40,7 @@ label {
     display: block;
     font-weight: 500;
     margin: 1.2rem 0 0.4rem;
-    color: #FFFDF8;
+    color: #3D5A3F;
 }
 
 input, textarea {
@@ -218,4 +218,78 @@ li.completed {
     font-weight: 500;
     font-size: 1.1rem;
     margin-bottom: 1.5rem;
+}
+
+.progress-section {
+    margin-bottom: 2rem;
+}
+
+.progress-label {
+    color: #5A5546;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar-track {
+    background: #E8E1D3;
+    border-radius: 20px;
+    height: 14px;
+    overflow: hidden;
+    margin-bottom: 0.4rem;
+}
+
+.progress-bar-fill {
+    background: #3D5A3F;
+    height: 100%;
+    border-radius: 20px;
+    transition: width 0.4s ease;
+}
+
+.progress-percent {
+    color: #B5652D;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.features-row {
+    display: flex;
+    gap: 1.2rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.feature-card {
+    background: rgba(255, 253, 248, 0.06);
+    border: 1px solid rgba(232, 217, 181, 0.15);
+    border-radius: 12px;
+    padding: 1.5rem;
+    flex: 1;
+    min-width: 180px;
+    max-width: 220px;
+}
+
+.feature-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.6;
+}
+
+.feature-title {
+    font-family: 'Playfair Display', serif;
+    color: #e8955a;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.feature-text {
+    color: #C9C2AD;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.footer-note {
+    margin-top: 4rem;
+    color: #B5652D;
+    font-size: 0.85rem;
+    font-style: italic;
 }
