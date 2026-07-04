@@ -20,9 +20,10 @@ def planner():
         cracker = ExamCrackerAI()
         cracker.setup_exam(exam_name, exam_date, syllabus, hours)
         cracker.build_task()
+        session['overflow_warning'] = cracker.overflow_warning
         session['tasks'] =[{"topic" : t["topic"], "date": t ["date"].isoformat(), "status": t["status"], "minutes": t["minutes"]} for t in cracker.tasks]
         session['exam_name'] = exam_name
-        return render_template('result.html', exam_name=exam_name, tasks=session['tasks'])
+        return render_template('result.html', exam_name=exam_name, tasks=session['tasks'], overflow_warning=cracker.overflow_warning)
     return render_template('index.html')
 
 @app.route('/mark_done', methods=['POST'])
@@ -33,7 +34,7 @@ def mark_done():
         if t['topic'] == topic_name:
             t['status'] = 'task completed'
     session['tasks'] = tasks
-    return render_template('result.html', exam_name=session.get('exam_name'), tasks=tasks)
+    return render_template('result.html', exam_name=session['tasks'], overflow_warning=cracker.overflow)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5050))

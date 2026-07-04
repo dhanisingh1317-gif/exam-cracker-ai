@@ -7,6 +7,10 @@
 <body>
     <div class="container">
         <h1>Your Master Plan: {{ exam_name }}</h1>
+        {% if overflow_warning %}
+            <p style="color:#B5652D; font-weight:500;">⚠️ You have more topics than days before your exam — consider increasing your daily hours or starting sooner!</p>
+        {% endif %}
+
         <ul>
             {% for task in tasks %}
                 <li class="{{ 'completed' if task.status != 'pending' else '' }}">

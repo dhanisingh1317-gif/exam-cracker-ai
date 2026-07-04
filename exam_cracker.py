@@ -29,16 +29,19 @@ class ExamCrackerAI:
             
             schedule = {}
             today = datetime.date.today()
+            overflow = len(self.syllabus) > days_remaining
+
 
             for i, topic in enumerate(self.syllabus):
-                study_date = today + datetime.timedelta(days=gap_days)
+                study_date = today + datetime.timedelta(days=i)
                 schedule.setdefault(study_date, []).append(topic)
             
-            return schedule
+            return schedule, overflow
         
         def build_task(self):
             self.tasks = []
-            schedule = self.generate_schedule()
+            schedule, overflow = self.generate_schedule()
+            self.overflow_warning = overflow
             total_minutes = self.hours_per_day * 60
             learn_minutes = total_minutes // 2
             practice_minutes = total_minutes - learn_minutes
