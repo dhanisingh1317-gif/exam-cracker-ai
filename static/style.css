@@ -10,9 +10,14 @@
 body {
     font-family: 'Inter', sans-serif;
     color: #2E2A24;
-    background-color: #F5EFE3 ;
+    background-color: #1B2E1F ;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(181, 101, 45, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(181, 101, 45, 0.1) 0%, transparent 40%),
+        linear-gradient(135deg, #1B2E1F 0%, #23392A 100%);
     line-height: 1.6;
     padding: 3rem 1.5rem;
+    min-height: 100vh;
 }
 
 .container {
@@ -27,16 +32,15 @@ body {
 h1 {
     font-family: 'Playfair Display' serif;
     font-size: 2rem;
-    color: #3D5A3F;
+    color: #ab6d43;
     margin-bottom: 1.5rem;
-
 }
 
 label {
     display: block;
     font-weight: 500;
     margin: 1.2rem 0 0.4rem;
-    color: #5A5547;
+    color: #FFFDF8;
 }
 
 input, textarea {
@@ -109,32 +113,42 @@ li.completed {
 }
 
 .landing {
-    max-width: 600px;
-    margin: 6rem;
+    max-width: 700px;
+    margin: 5rem auto;
     text-align: center;
-    padding: 2.5rem;
+    padding: 3rem 2rem;
 }
 
 .tagline {
     color: #B5652D;
     font-weight: 500;
-    letter-spacing: 0.05rem;
+    letter-spacing: 0.08rem;
     text-transform:uppercase;
-    font-size: 0.8rem;
-    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+.landing-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    color: #E8D9B5;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
 }
 .landing-sub {
-    color: #5A5546;
-    font-size: 1.1rem;
-    margin-bottom:2rem;    
+    color: #C9C2AD;
+    font-size: 1.3rem;
+    margin-bottom: 3rem;  
+    line-height: 1.7;  
 }
 
 .cta-btn {
     display: inline-block;
     background: #3D5A3F;
     color: #FFFDF8;
-    padding: 0.9rem 2rem;
-    border-radius: 8px;
+    padding: 1.1rem 2.8rem;
+    border-radius: 10px;
+    font-size: 1.1rem;
     font-weight: 500;
     text-decoration: none;
     transition: background 0.2s ease;
@@ -143,4 +157,65 @@ li.completed {
 .cta-btn:hover {
     background: #2E4630;
     text-decoration: none;
+}
+
+.pomodoro {
+    margin-top: 5rem;
+    padding-top: 3rem;
+    border-top: 1px solid #D8CFBC;
+}
+
+.pomodoro-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: #E8D9B5;
+    margin-bottom: 2rem;
+}
+
+.timer-display {
+    font-size: 5.5rem;
+    font-weight: 700;
+    color: #B5652D;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 0.5rem;          
+}
+
+.timer-mode {
+    color: #C9C2AD;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08rem;
+}
+
+.timer-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.timer-btn {
+    padding: 0.9rem 2rem;
+    background: #3D5A3F;
+    color: #FFFDF8;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.timer-btn:hover {
+    background: #2E4630;
+}
+
+.completion-message {
+    background: #3D5A3F;
+    color: #FFFDF8;
+    padding: 1.2rem;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
 }

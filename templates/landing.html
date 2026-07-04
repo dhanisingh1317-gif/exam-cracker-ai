@@ -8,8 +8,70 @@
         <div class="landing">
             <p class="tagline">calm, focused, exam-ready</p>
             <h1 class="landing-title">Exam Cracker AI</h1>
-            <p class="landing-sub">Turn your stllabus into a day-by-day study plan you will actyally follow.</p>
+            <p class="landing-sub">Turn your stllabus into a day-by-day study plan you will actually follow.</p>
             <a href="/planner" class="cta-btn">Build My Plan</a>
+            
+            <div class="pomodoro">
+                <h2 class="pomodoro-title">Focus Session</h2>
+                <div class="timer-display" id="timerDisplay">25:00</div>
+                <div class="timer-mode" id="timerMode">Focus Session</div>
+                <div class="timer-buttons">
+                    <button type="button" id="startBtn" class="timer-btn">Start</button>
+                    <button type="button" id="pauseBtn" class="timer-btn">Pause</button>
+                    <button type="button" id="resetBtn" class="timer-btn">Reset</button>
+                </div>
+            </div>
         </div>
+        <script>
+            let totalSeconds = 25 *60;
+            let isFocusMode = true;
+            let timerInterval = null;
+            let isRunning = false;
+
+            const display = document.getElementById('timerDisplay');
+            const modeLabel = document.getElementById('timerMode');
+            const startBtn = document.getElementById('startBtn');
+            const pauseBtn = document.getElementById('pauseBtn');
+            const resetBtn = document.getElementById('resetBtn');
+
+            function updateDisplay() {
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                display.textContent = String(minutes).padStart(2, '0') + ":" + String(seconds).padStart(2, '0');
+            }
+            function tick() {
+                if (totalSeconds > 0) {
+                    totalSeconds--;
+                    updateDisplay();
+                } else {
+                    isFocusMode = !isFocusMode;
+                    totalSeconds = isFocusMode ? 25 * 60 : 5 * 60;
+                    modeLabel.textContent = isFocusMode ? "Focus Session" : "Break Time";
+                    updateDisplay();
+                }
+            }
+
+            startBtn.addEventListener('click', function() {
+                if (!isRunning){
+                    isRunning = true;
+                    timerInterval = setInterval(tick, 1000);
+                }
+            });
+
+            pauseBtn.addEventListener('click', function(){
+                isRunning = false;
+                clearInterval(timerInterval);
+            });
+
+            resetBtn.addEventListener('click', function() {
+                isRunning = false;
+                clearInterval(timerInterval);
+                isFocusMode = true;
+                totalSeconds = 25 * 60;
+                modeLabel.textContext = "Focus Session";
+                updateDisplay();
+            });
+        </script>
+
 </body>
 </html>

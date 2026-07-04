@@ -5,18 +5,20 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Exam cracker AI </h1>
-    <form method="POST">
-        <label>Exam Name:</label><br>
-        <input type="text" name="exam_name" required><br><br>
-        <label>Exam Date:</label><br>
-        <input type="date" name="exam_date" required><br><br>
-        <label>Exam Topics:</label><br>
-        <textarea name="syllabus" required></textarea><br><br>
-        <label>Hours per day:</label><br>
-        <input type="number" name="hours" min="1" value="2" required><br><br>
-        <button type="submit">Submit</button>
-    </form>
+    <div class=""container>
+        <h1>Exam cracker AI </h1>
+        <form method="POST">
+            <label>Exam Name:</label><br>
+            <input type="text" name="exam_name" required><br><br>
+            <label>Exam Date:</label><br>
+            <input type="date" name="exam_date" required><br><br>
+            <label>Exam Topics:</label><br>
+            <textarea name="syllabus" required></textarea><br><br>
+            <label>Hours per day:</label><br>
+            <input type="number" name="hours" min="1" value="2" required><br><br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 </body>
 </html>
 

@@ -34,7 +34,7 @@ def mark_done():
         if t['topic'] == topic_name:
             t['status'] = 'task completed'
     session['tasks'] = tasks
-    return render_template('result.html', exam_name=session['tasks'], overflow_warning=cracker.overflow)
+    return render_template('result.html', exam_name=session.get('exam_name'), tasks=tasks, overflow_warning=session.get('overflow_warning'))
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5050))

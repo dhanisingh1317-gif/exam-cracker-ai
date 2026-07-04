@@ -7,6 +7,13 @@
 <body>
     <div class="container">
         <h1>Your Master Plan: {{ exam_name }}</h1>
+        {% set all_done = tasks | selectattr('status', 'equalto', 'pending') | list | length == 0 %}
+        {% if all_done %}
+            <div class="completion-message">
+                🎉 Congratulations! Now you are fully prepared and All the best! Score well!
+            </div>
+        {% endif %}
+
         {% if overflow_warning %}
             <p style="color:#B5652D; font-weight:500;">⚠️ You have more topics than days before your exam — consider increasing your daily hours or starting sooner!</p>
         {% endif %}
