@@ -92,3 +92,55 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+li.completed {
+    color: #A8A296;
+    text-decoration: line-through;
+}
+
+.mark-btn {
+    background: #3D5A3F;
+    color: #FFFDF8;
+    border: none;
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.landing {
+    max-width: 600px;
+    margin: 6rem;
+    text-align: center;
+    padding: 2.5rem;
+}
+
+.tagline {
+    color: #B5652D;
+    font-weight: 500;
+    letter-spacing: 0.05rem;
+    text-transform:uppercase;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+}
+.landing-sub {
+    color: #5A5546;
+    font-size: 1.1rem;
+    margin-bottom:2rem;    
+}
+
+.cta-btn {
+    display: inline-block;
+    background: #3D5A3F;
+    color: #FFFDF8;
+    padding: 0.9rem 2rem;
+    border-radius: 8px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.cta-btn:hover {
+    background: #2E4630;
+    text-decoration: none;
+}
