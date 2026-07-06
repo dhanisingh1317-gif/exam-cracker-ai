@@ -1,0 +1,18 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Plans</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>My Saved Plans</h1>
+        <ul>
+            {% for exam in exams %}
+                <li><a href="{{ url_for('view_plan', exam_id=exam.id) }}">{{ exam.exam_name }} - {{ exam.exam_date }}</a></li>
+            {% endfor %}
+        </ul>
+        <p><a href="/">Back to form</a></p>
+    </div>
+</body>
+</html>

@@ -2,3 +2,4 @@
 __pycache__/
 *.pyc
 exam_data.json
+exam_cracker.db

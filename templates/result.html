@@ -8,13 +8,14 @@
     <div class="container">
         <h1>Your Master Plan: {{ exam_name }}</h1>
         <div class="progress-section">
-            <div class="progress-label">{{ progress.completed }} of {{ progress.total }} tasks completed </div>
+            <div class="progress-label">{{ progress.completed }} of {{ progress.total }} tasks completed</div>
             <div class="progress-bar-track">
                 <div class="progress-bar-fill" style="width: {{ progress.percent }}%;"></div>
             </div>
             <div class="progress-percent">{{ progress.percent }}%</div>
         </div>
-        {% set all_done = tasks | selectattr('status', 'equalto', 'pending') | list | length == 0 %}
+
+        {% set all_done = progress.percent == 100 %}
         {% if all_done %}
             <div class="completion-message">
                 🎉 Congratulations! Now you are fully prepared and All the best! Score well!
@@ -28,9 +29,9 @@
         <ul>
             {% for task in tasks %}
                 <li class="{{ 'completed' if task.status != 'pending' else '' }}">
-                    {{ task.date }} - {{ task.topic }}  ({{ task.minutes }} min) - {{ task.status}}
+                    {{ task.date }} - {{ task.topic }} ({{ task.minutes }} min) - {{ task.status }}
                     {% if task.status == "pending" %}
-                        <form method="POST" action="/mark_done" style="display:inline;">
+                        <form method="POST" action="{{ url_for('mark_done', exam_id=exam_id) }}" style="display:inline;">
                             <input type="hidden" name="topic" value="{{ task.topic }}">
                             <button type="submit" class="mark-btn">Mark Done</button>
                         </form>
