@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, session,  request, url_for, redirect
 from exam_cracker import ExamCrackerAI
-from database import init_db, save_exam, get_exam, mark_task_done, get_all_exams
+from database import init_db, save_exam, get_exam, mark_task_done, get_all_exams, delete_exam
 import os
 
 app = Flask(__name__)
@@ -62,7 +62,12 @@ def my_plans():
     exams = get_all_exams()
     return render_template('my_plans.html', exams=exams)
 
+@app.route('/delete/<int:exam_id>', methods=['POST'])
+def delete_plan(exam_id):
+    delete_exam(exam_id)
+    return redirect(url_for('my_plans'))
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5050))
     app.run(host='0.0.0.0', port=port)
-  
+

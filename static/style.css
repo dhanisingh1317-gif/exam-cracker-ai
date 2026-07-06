@@ -293,3 +293,52 @@ li.completed {
     font-size: 0.85rem;
     font-style: italic;
 }
+
+.secondary-link {
+    display: block;
+    margin-top: 1rem;
+    color: #C9C2AD;
+    font-size: 0.95rem;
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 1.5rem;
+        margin: 1rem ;
+    }
+
+    .landing {
+        padding: 2rem 1rem;
+        margin: 2rem auto;
+    }
+
+    .landing-title {
+        font-size: 2.2rem;
+    }
+
+    .landing-sub {
+        font-size: 1rem;
+    }
+
+    .features-row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .feature-card {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .timer-display {
+        font-size: 3.5rem;
+    }
+
+    li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+}

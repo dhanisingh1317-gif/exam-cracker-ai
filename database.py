@@ -79,3 +79,11 @@ def get_all_exams():
     exams = c.fetchall()
     conn.close()
     return [dict(e) for e in exams]
+
+def delete_exam(exam_id):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+    c.execute("DELETE FROM tasks WHERE exam_id = ?", (exam_id,))
+    c.execute("DELETE FROM exams WHERE id = ?", (exam_id,))
+    conn.commit()
+    conn.close()

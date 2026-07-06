@@ -9,7 +9,12 @@
         <h1>My Saved Plans</h1>
         <ul>
             {% for exam in exams %}
-                <li><a href="{{ url_for('view_plan', exam_id=exam.id) }}">{{ exam.exam_name }} - {{ exam.exam_date }}</a></li>
+                <li>
+                    <a href="{{ url_for('view_plan', exam_id=exam.id) }}">{{ exam.exam_name }} - {{ exam.exam_date }}</a>
+                    <form method="POST" action="{{ url_for('delete_plan', exam_id=exam.id) }}" style="display: inline;">
+                        <button type="submit" class="mark_btn" style="background:#B5652D">Delete</button>
+                    </form>
+                </li>
             {% endfor %}
         </ul>
         <p><a href="/">Back to form</a></p>
