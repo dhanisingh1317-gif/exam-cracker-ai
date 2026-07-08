@@ -87,3 +87,80 @@ def delete_exam(exam_id):
     c.execute("DELETE FROM exams WHERE id = ?", (exam_id,))
     conn.commit()
     conn.close()
+
+import json
+
+def init_journal_table():
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS journal (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            entry_date TEXT UNIQUE,
+            created_at TEXT,
+            schedule TEXT,
+            priorities TEXT,
+            todos TEXT,
+            notes TEXT,
+            for_tomorrow TEXT,
+            meals TEXT,
+            workout TEXT,
+            mood TEXT
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+def save_journal(entry_date, schedule, priorities, todos, notes, for_tomorrow, meals, workout, mood):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute("SELECT id FROM journal WHERE entry_date = ?", (entry_date,))
+    existing = c.fetchone()
+    
+    if existing:
+        c.execute('''
+            UPDATE journal
+            SET schedule = ?, priorities = ?, todos = ?, notes = ?, for_tomorrow = ?,
+                  meals = ?, workout = ?, mood = ?, created_at = ?
+            WHERE entry_date = ?
+        ''', (
+            json.dumps(schedule), json.dumps(priorities), json.dumps(todos),
+            notes, for_tomorrow, meals, workout, mood,
+            datetime.datetime.now().isoformat(), entry_date
+        ))
+    else:
+        c.execute(''' 
+           INSERT INTO journal
+           (entry_date, created_at, schedule, priorities, todos, notes, for_tomorrow, meals, workout, mood)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''',(
+            entry_date, datetime.datetime.now().isoformat(),
+            json.dumps(schedule), json.dumps(priorities), json.dumps(todos),
+            notes, for_tomorrow, meals, workout, mood
+        ))
+    conn.commit()
+    conn.close()
+
+def get_journal(entry_date):
+    conn = sqlite3.connect(DB_NAME)
+    conn.row_factory = sqlite3.Row
+    c = conn.cursor()
+    c.execute("SELECT * FROM journal WHERE entry_date = ?", (entry_date,))
+    row = c.fetchone()
+    conn.close()
+
+    if row is None:
+        return None
+
+    return {
+        "schedule": json.loads(row["schedule"]),
+        "priorities": json.loads(row["priorities"]),
+        "todos": json.loads(row["todos"]),
+        "notes": row["notes"],
+        "for_tomorrow": row["for_tomorrow"],
+        "meals": row["meals"],
+        "workout": row["workout"],
+        "mood": row["mood"],
+    }
+

@@ -1,13 +1,13 @@
-from flask import Flask, request, render_template, session,  request, url_for, redirect
+from flask import Flask, request, render_template, session, url_for, redirect
 from exam_cracker import ExamCrackerAI
-from database import init_db, save_exam, get_exam, mark_task_done, get_all_exams, delete_exam
+from database import init_db, save_exam, get_exam, mark_task_done, get_all_exams, delete_exam, init_journal_table, save_journal, get_journal
 import os
 
 app = Flask(__name__)
 app.secret_key = "any-random-string-here-for-now"
 
 init_db()
-
+init_journal_table()
 
 @app.route('/')
 def landing():
@@ -66,6 +66,43 @@ def my_plans():
 def delete_plan(exam_id):
     delete_exam(exam_id)
     return redirect(url_for('my_plans'))
+
+TIME_SLOT = ["6-7 AM", "7-8 AM", "8-9 AM", "9-10 AM", "10-11 AM", "11-12 AM",
+              "12-1 PM", "1-2 PM", "2-3 PM", "3-4 PM", "4-5 PM", "6-7 PM", "7-8 PM", "8-9 PM"]
+
+import datetime
+
+@app.route('/journal', methods=['GET', 'POST'])
+def journal():
+    today_str = datetime.date.today().isoformat()
+
+    if request.method == 'POST':
+        schedule = {}
+        for slot in TIME_SLOT:
+            schedule[slot] = request.form.get(f"slot_{slot}", "")
+
+        priorities = [
+            request.form.get("priority_1", ""),
+            request.form.get("priority_2", ""),
+            request.form.get("priority_3", ""),
+            request.form.get("priority_4", ""),
+        ]
+        
+        todos_raw = request.form.get("todos", "")
+        todos = [t.strip() for t in todos_raw.split("\n") if t.strip()]
+
+        notes = request.form.get("notes", "")
+        for_tomorrow = request.form.get("for_tomorrow", "")
+        meals = request.form.get("meals", "")
+        workout = request.form.get("workout", "")
+        mood = request.form.get("mood", "")
+
+        save_journal(today_str, schedule, priorities, todos, notes, for_tomorrow, meals, workout, mood)
+        return redirect(url_for('journal'))
+
+    existing = get_journal(today_str)
+    return render_template('journal.html', entry=existing, time_slots=TIME_SLOT)
+         
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5050))

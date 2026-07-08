@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Daily Journal - Exam Cracker AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container journal-container">
+        <h1>Daily Plan</h1>
+        <p class="journal-note">This resets 24 hours after you save it.</p>
+
+        <form method="POST">
+            <div class="journal-grid">
+                <div class="journal-column glass-card">
+                    <h2 class="journal-heading">Today's Schedule</h2>
+                    {% for slot in time_slots %}
+                        <div class="schedule-row">
+                            <span class="slot-label">{{ slot }}</span>
+                            <input type="text" name="slot_{{ slot }}" value="{{ entry.schedule[slot] if entry else '' }}">
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="journal-column glass-card">
+                    <h2 class="journal-heading">Top Priorities</h2>
+                    {% for i in range(1, 5) %}
+                        <input type="text" class="priority-input" name="priority_{{ i }}" value="{{ entry.priorities[i-1] if entry else '' }}" placeholder="Priority {{ i }}">
+                    {% endfor %}
+
+                    <h2 class="journal-heading">To Do List</h2>
+                    <textarea name="todos" rows="6" placeholder="One task per line">{{ entry.todos | join('\n') if entry else '' }}</textarea>
+
+                    <h2 class="journal-heading">Notes</h2>
+                    <textarea name="notes" rows="3" placeholder="Anything on your mind">{{ entry.notes if entry else '' }}</textarea>
+
+                    <h2 class="journal-heading">For Tomorrow</h2>
+                    <textarea name="for_tomorrow" rows="3" placeholder="What's next">{{ entry.for_tomorrow if entry else '' }}</textarea>
+                </div>
+
+                <div class="journal-column glass-card">
+                    <h2 class="journal-heading">Meals</h2>
+                    <textarea name="meals" rows="4" placeholder="Breakfast, lunch, dinner...">{{ entry.meals if entry else '' }}</textarea>
+
+                    <h2 class="journal-heading">Workout</h2>
+                    <textarea name="workout" rows="3" placeholder="What movement today?">{{ entry.workout if entry else '' }}</textarea>
+
+                    <h2 class="journal-heading">Mood</h2>
+                    <div class="mood-picker">
+                        {% for m in ['😞','😐','🙂','😄','😆','🥱', '🥴', '😤','😭','😈','🥶', '🥵'] %}
+                            <label class="mood-option">
+                                <input type="radio" name="mood" value="{{ m }}" {{ 'checked' if entry and entry.mood == m else '' }}>
+                                <span>{{ m }}</span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="cta-btn">Save My Day</button>
+        </form>
+
+        <p><a href="/">Back to home</a></p>
+    </div>
+</body>
+</html>

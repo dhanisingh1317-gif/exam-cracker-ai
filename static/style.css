@@ -3,7 +3,7 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: broder-box;
+    box-sizing: border-box;
 
 }
 
@@ -252,21 +252,33 @@ li.completed {
 }
 
 .features-row {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 1.2rem;
     margin-top: 3rem;
-    flex-wrap: wrap;
-    justify-content: center;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .feature-card {
     background: rgba(255, 253, 248, 0.06);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     border: 1px solid rgba(232, 217, 181, 0.15);
-    border-radius: 12px;
-    padding: 1.5rem;
+    border-radius: 14px;
+    padding: 1.8rem 1.5rem;
     flex: 1;
     min-width: 180px;
     max-width: 220px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+    border-color: rgba(181, 101, 45, 0.35);
 }
 
 .feature-icon {
@@ -294,12 +306,216 @@ li.completed {
     font-style: italic;
 }
 
-.secondary-link {
-    display: block;
-    margin-top: 1rem;
+.secondary-btn-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.2rem;
+}
+
+.secondary-btn {
+    display: inline-block;
+    background: rgba(232, 217, 181, 0.08);
+    color: #E8D9B5;
+    border: 1px solid rgba(232, 217, 181, 0.35);
+    padding: 0.8rem 2rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    min-width: 200px;
+    text-align: center;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.secondary-btn:hover {
+    background: rgba(232, 217, 181, 0.15);
+    border-color: #E8D9B5;
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+
+.journal-container {
+    max-width: 950px;
+    background: transparent;
+    border: none;
+    padding: 2.5rem 1.5rem;
+}
+
+.journal-container h1 {
+    font-family: 'Playfair Display', serif;
+    color: #E8D9B5;
+}
+
+.journal-body {
+    background-color: #944F21;
+}
+
+.journal-note {
+    color:  #C9C2AD;
+    margin-bottom: 2rem; 
+}
+
+.journal-column {
+    flex: 1;
+    min-width: 280px;
+}
+
+.journal-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: #ab6d43;
+    margin: 1.5rem 0 0.8;
+}
+
+.schedule-row {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #E8E1D3;
+    padding: 0.5rem 0; 
+}
+
+.slot-label {
+    width: 90px;
+    font-size: 0.85rem;
+    color: #5A5546;
+    flex-shrink: 0;
+}
+
+.schedule-row input {
+    border: none;
+    border-bottom: 1px solid transparent;
+    background: transparent;
+    padding: 0.3rem;
+}
+
+.schedule-row input:focus {
+    border-bottom: 0.8rem;
+    outline: none;
+}
+
+.priority-input {
+    margin-bottom: 0.8rem;
+    background: #FBF3E3;
+}
+
+.journal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+}
+
+.glass-card {
+    flex: 1;
+    min-width: 280px;
+    background: rgba(255, 253, 248, 0.06);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(232, 217, 181, 0.15);
+    border-radius: 14px;
+    padding: 1.8px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    border-color: rgba(181, 101, 45, 0.35);
+}
+
+.glass-card .journal-heading {
+    font-family: 'Playfair Display', serif;
+    color: #e8955a;
+    font-size: 1.2rem;
+    margin: 1.2rem 0 0.6;
+}
+
+.glass-card .journal-heading:first-child {
+    margin-top: 0;
+}
+
+.glass-card input[type="text"],
+.glass-card textarea {
+    width: 100%;
+    background: rgba(255, 253, 248, 0.12);
+    border: 1px solid rgba(232, 217, 181, 0.15);
+    border-radius: 8px;
+    color: #E8D9B5;
+    padding: 0.6rem;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 0.6rem;
+}
+
+.glass-card input[type="text"]::placeholder,
+.glass-card textarea::placeholder {
     color: #C9C2AD;
-    font-size: 0.95rem;
-    text-decoration: underline;
+    opacity: 0.6;
+}
+
+.glass-card input[type="text"]:focus,
+.glass-card textarea:focus {
+    outline: none;
+    border-color: #B5652D;
+    box-shadow: 0 0 3px rgba(181, 101, 45, 0.15);
+}
+
+.glass-card .schedule-row input {
+    border-bottom: 1px solid rgba(232, 217, 181, 0.12);
+}
+
+.glass-card .slot-label {
+    color: #C9C2AD;
+}
+
+.glass-card .schedule-row input {
+    background: transparent;
+    border: none;
+    color: #E8D9B5;
+}
+
+.glass-card .priority-input {
+    background: rgba(255, 253, 248, 0.07);
+}
+
+.mood-picker {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.mood-option input {
+    display: none;
+}
+
+.mood-option span {
+    display: inline-block;
+    font-size: 1.5rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 10px;
+    cursor: pointer;
+    background: rgba(255, 253, 248, 0.05);
+    border: 1px solid rgba(232, 217, 181, 0.1);
+    transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+} 
+
+.mood-option input:checked + span {
+    background: rgba(181, 101, 45, 0.25);
+    border-color: #B5652D;
+    transform: scale(1.15);
+}
+
+.mood-option span:hover {
+    transform: scale(1.08);
+}
+
+.journal-container .cta-btn {
+    margin-top: 1.5rem;
+}
+
+.journal-container a {
+    color: #C9C2AD;
 }
 
 @media (max-width: 600px) {
@@ -341,4 +557,10 @@ li.completed {
         gap: 0.5rem;
     }
 
+}
+
+@media (max-width: 600px) {
+    .journal-grid {
+        flex-direction: column;
+    }
 }
