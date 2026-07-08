@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, session, url_for, redirect
+from flask import Flask, request, render_template, session, url_for, redirect, Response
 from exam_cracker import ExamCrackerAI
 from database import init_db, save_exam, get_exam, mark_task_done, get_all_exams, delete_exam, init_journal_table, save_journal, get_journal
 import os
@@ -103,6 +103,35 @@ def journal():
     existing = get_journal(today_str)
     return render_template('journal.html', entry=existing, time_slots=TIME_SLOT)
          
+@app.route('/export/<int:exam_id>')
+def export_calendar(exam_id):
+    exam, tasks = get_exam(exam_id)
+    if exam is None:
+        return "Exam not found", 404
+    
+    ics_lines = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//Exam Cracker AI//EN"
+    ]
+
+    for t in tasks:
+        date_str = t["date"].replace("-", "")
+        ics_lines.append("BEGIN:VEVENT")
+        ics_lines.append(f"SUMMARY:{t['topic']}")
+        ics_lines.append(f"DTSTART;VALUE=DATE:{date_str}")
+        ics_lines.append(f"DTEND;VALUE=DATE:{date_str}")
+        ics_lines.append(f"DESCRIPTION:{t['minutes']} minutes - Status: {t['status']}")
+        ics_lines.append("END:VEVENT")
+    
+    ics_lines.append("END:VCALENDAR")
+    ics_content = "\r\n".join(ics_lines)
+
+    return Response(
+        ics_content,
+        mimetype="text/calendar",
+        headers={"Content-Disposition": f"attachment;filename={exam['exam_name']}_plan.ics"}
+    )
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5050))
