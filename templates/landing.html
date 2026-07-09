@@ -41,6 +41,13 @@
                  
             <div class="pomodoro">
                 <h2 class="pomodoro-title">Focus Timer</h2>
+
+                <div class="timer-settings" style="margin-bottom: 1rem; font-size: 0.9rem;">
+                    <label for="customMins" style="color: #666;">Focus Minutes : </label>
+                    <input class="number" id="customMins" value="25" min="1" max="180" style="width: 55px; padding: 4px; border-radius: 4px; border: 1px solid #ccc; margin-right: 5px;">
+                    <button type="button" id="setTimerBtn" value="25" style="padding: 4px 8px; background: #555; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Set</button>
+                </div>
+
                 <div class="timer-display" id="timerDisplay">25:00</div>
                 <div class="timer-mode" id="timerMode">Focus Session</div>
                 <div class="timer-buttons">
@@ -48,12 +55,23 @@
                     <button type="button" id="pauseBtn" class="timer-btn">Pause</button>
                     <button type="button" id="resetBtn" class="timer-btn">Reset</button>
                 </div>
-            </div>
             
+            
+                <div class="time-logger" style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px dashed #ccc;">
+                    <h4 style="margin: 0 0 0.5rem 0; font-size: 1rem; color: #333">📊 Log Hours Spent Today</h4>
+                    <form action="/log-time" method="POST" style="display: flex; gap: 8px; justify-content: center; align-items: center;">
+                        <input type="hidden" name="exam_id" value="{{ exam_id }}">
+                        <input type="number" name="hours_spent" step="0.5" min="0" placeholder="e.g, 2.5" required style="width: 80px; padding: 6px; border-radius: 4px; border: 1px solid #ccc;">
+                        <button type="submit" style="padding: 6px 12px; background: #007bff; color:white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Log</button>
+                    </form>
+                </div>
+            </div>
+
             <p class="footer-note">Built with care for students who leave things to the last minute — no judgment.</p>
         </div>
         <script>
-            let totalSeconds = 25 *60;
+            let focusMinutesSetting = 25; // Store active user choice
+            let totalSeconds = focusMinutesSetting *60;
             let isFocusMode = true;
             let timerInterval = null;
             let isRunning = false;
@@ -63,6 +81,8 @@
             const startBtn = document.getElementById('startBtn');
             const pauseBtn = document.getElementById('pauseBtn');
             const resetBtn = document.getElementById('resetBtn');
+            const customMinsInput = document.getElementById('customMins');
+            const setTimerBtn = document.getElementById('setTimerBtn');
 
             function updateDisplay() {
                 const minutes = Math.floor(totalSeconds / 60);
@@ -75,11 +95,22 @@
                     updateDisplay();
                 } else {
                     isFocusMode = !isFocusMode;
-                    totalSeconds = isFocusMode ? 25 * 60 : 5 * 60;
+                    totalSeconds = isFocusMode ? focusMinutesSetting * 60 : 5 * 60;
                     modeLabel.textContent = isFocusMode ? "Focus Session" : "Break Time";
                     updateDisplay();
                 }
             }
+
+            setTimerBtn.addEventListener('click', function() {
+                const val = parseInt(customMinsInput.value);
+                if (val && val > 0) {
+                    focusMinutesSetting = val;
+                    if (!isRunning && isFocusMode) {
+                        totalSeconds = focusMinutesSetting * 60;
+                        updateDisplay();
+                    }
+                }
+            });
 
             startBtn.addEventListener('click', function() {
                 if (!isRunning){
@@ -97,7 +128,7 @@
                 isRunning = false;
                 clearInterval(timerInterval);
                 isFocusMode = true;
-                totalSeconds = 25 * 60;
+                totalSeconds = focusMinutesSetting * 60;
                 modeLabel.textContent = "Focus Session";
                 updateDisplay();
             });

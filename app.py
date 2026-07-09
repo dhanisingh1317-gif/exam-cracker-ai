@@ -133,7 +133,15 @@ def export_calendar(exam_id):
         headers={"Content-Disposition": f"attachment;filename={exam['exam_name']}_plan.ics"}
     )
 
+@app.route('/log-time', methods=['POST'])
+def log_time():
+    exam_id = request.form.get('exam_id')
+    hours_spent = request.form.get('hours_spent')
+
+    return redirect(url_for('my_plans'))
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5050))
     app.run(host='0.0.0.0', port=port)
+
 
