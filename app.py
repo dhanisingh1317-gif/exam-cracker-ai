@@ -46,6 +46,7 @@ def view_plan(exam_id):
         'result.html',
         exam_id=exam_id,
         exam_name=exam["exam_name"],
+        hours_per_day=exam["hours_per_day"],
         tasks=tasks,
         overflow_warning=bool(exam["overflow_warning"]),
         progress=progress
@@ -133,15 +134,32 @@ def export_calendar(exam_id):
         headers={"Content-Disposition": f"attachment;filename={exam['exam_name']}_plan.ics"}
     )
 
+import sqlite3
+
 @app.route('/log-time', methods=['POST'])
 def log_time():
     exam_id = request.form.get('exam_id')
-    hours_spent = request.form.get('hours_spent')
+    hours_spent = float(request.form.get('hours_spent', 0))
 
-    return redirect(url_for('my_plans'))
+    if not exam_id:
+        return "Missing exam_id in form submission", 400
+    exam_id = int(exam_id)
+
+    conn = sqlite3.connect('exam_cracker.db')
+    cursor = conn.cursor()
+
+    cursor.execute('''
+        UPDATE exams
+        SET hours_per_day = ?
+        WHERE id = ?
+    ''', (hours_spent, exam_id))
+    
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for('view_plan', exam_id=exam_id))
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5050))
     app.run(host='0.0.0.0', port=port)
-
 

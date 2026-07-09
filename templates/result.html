@@ -13,6 +13,17 @@
                 <div class="progress-bar-fill" style="width: {{ progress.percent }}%;"></div>
             </div>
             <div class="progress-percent">{{ progress.percent }}%</div>
+            <div class="time-logger" >
+                    <h4 class="journal-heading">📊 Log Hours Spent Today</h4>
+                    <form action="/log-time" method="POST" class="time-logger-form">
+                        <input type="hidden" name="exam_id" value="{{ exam_id }}">
+                        <input type="number" name="hours_spent" step="0.5" min="0" placeholder="hrs" required class="hours-input">
+                        <button type="submit" >Log</button>
+                    </form>
+                </div>
+            <div class="hours-logged" >
+                ⏱️ Currently logging <strong>{{ hours_per_day }}</strong> hrs/day 
+            </div>
         </div>
 
         {% set all_done = progress.percent == 100 %}

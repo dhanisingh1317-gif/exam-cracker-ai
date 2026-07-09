@@ -518,6 +518,36 @@ li.completed {
     color: #C9C2AD;
 }
 
+.time-logger {
+    margin-top: 1.5rem;
+    padding-top: 0.9rem;
+    border-top: 1px dashed #D8CFBC;
+}
+
+.time-logger-form {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.hours-input {
+    width: 90px;
+    flex-shrink: 0;
+}
+
+.hours-logged {
+    color: #5A5546;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+.time-logger-form .hours-input {
+    width: 70px;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
 @media (max-width: 600px) {
     .container {
         padding: 1.5rem;
