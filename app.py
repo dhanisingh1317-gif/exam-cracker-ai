@@ -159,6 +159,10 @@ def log_time():
 
     return redirect(url_for('view_plan', exam_id=exam_id))
 
+@app.route('/resources')
+def resources():
+    return render_template('resources.html')
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5050))
     app.run(host='0.0.0.0', port=port)
