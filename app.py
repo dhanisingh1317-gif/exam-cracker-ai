@@ -220,32 +220,6 @@ def quiz_grade():
 
     return render_template('quiz_result.html', topic=session.get('quiz_topic'), results=results, score=score, total=total, percent=percent)
 
-from spotify_auth import get_auth_url, exchange_code_for_token, refresh_access_token
-import time
-
-@app.route('/spotif/login')
-def spotify_login():
-    return redirect(get_auth_url())
-
-@app.route('/spotify/callback')
-def spotify_callback():
-    code = request.args.get('code')
-    error = request.args.get('error')
-
-    if error:
-        return f"Spotify login failed: {error}", 400
-
-    token_data = exchange_code_for_token(code)
-
-    if 'access_token' not in token_data:
-        return f"Token exchange failed: {token_data}", 400
-    
-    session['spotify_access_token'] = token_data['access_token']
-    session['spotify_refresh_token'] = token_data['refresh_token']
-    session['spotify_token_expires'] = time.time() + token_data['expires_in']
-
-    return redirect(url_for('spotify_login'))
-
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5050))
     app.run(host='0.0.0.0', port=port)
