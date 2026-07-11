@@ -13,8 +13,8 @@
         <div class="secondary-btn-row">
             <a href="/my-plans" class="secondary-btn">View My Plans</a>
             <a href="/journal" class="secondary-btn">Daily Journal</a>
-            <a href="/resources" class="secondary-btn">📚 Free Library</a>
-            <a href="https://opentdb.com" target="_blank" class="secondary-btn">🤖 Daily Quiz</a>
+            <a href="/resources" class="secondary-btn">Free Library</a>
+            <a href="/quiz" class="secondary-btn">Quiz Yourself</a>
         </div>
 
             <div class="features-row">
@@ -57,8 +57,9 @@
                     <button type="button" id="pauseBtn" class="timer-btn">Pause</button>
                     <button type="button" id="resetBtn" class="timer-btn">Reset</button>
                 </div>
+                <a href="{{ url_for('spotify_login') }}" class="secondary-btn">Connect Spotify</a>
             </div>
-
+             
             <p class="footer-note">Built with care for students who leave things to the last minute — no judgment.</p>
         </div>
         <script>

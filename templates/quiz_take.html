@@ -1,0 +1,27 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ topic }} Quiz</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="journal-body">
+    <div class="container journal-container">
+        <h1>{{ topic }}</h1>
+        <form method="POST" action="{{ url_for('quiz_grade') }}">
+            {% for q in questions %}
+                {% set q_index = loop.index0 %}
+                <div class="glass-card quiz-question-card" style="margin-bottom: 1.2rem;">
+                    <p class="question-text">{{ loop.index }}. {{ q.question }}</p>
+                    {% for option in q.options %}
+                        <label >
+                            <input type="radio" name="q{{ q_index }}" value="{{ loop.index0 }}" required>
+                            {{ option }}
+                        </label>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="cta-btn">Submit Quiz</button>
+        </form>
+    </div>
+</body>
+</html>

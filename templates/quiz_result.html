@@ -1,0 +1,29 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="journal-body">
+    <div class="container journal-container">
+        <h1>Results: {{ topic }}</h1>
+        <div class="completion-message">You scored {{ score }} / {{ total }} ({{ percent }}%)</div>
+
+        
+        {% for r in results %}
+             <div class="glass-card result-card {{ 'correct' if r.is_correct else 'incorrect' }}" style="margin-bottom: 1.2rem;">
+                <p class="question-text">{{ loop.index }}. {{ r.question }}</p>
+                <p class="answer-line" style="color:coral">Your answer: {{ r.options[r.submitted_index] if r.submitted_index >= 0 else 'No answer' }}
+                    {{ '✅' if r.is_correct else '❌' }}</p>
+                {% if not r.is_correct %}
+                    <p class="answer-line" style="color:coral">Correct answer: {{ r.options[r.correct_index] }}</p>
+                {% endif %}
+                <p class="explanation" style="color:beige"> {{ r.explanation }}</p>
+            </div>
+        {% endfor %}
+
+        <a href="{{ url_for('quiz_start') }}" class="cta-btn">Try Another Topic</a>
+        <p><a href="/" class="cta-btn">Back to Home</a></p>
+    </div>
+</body>
+</html>

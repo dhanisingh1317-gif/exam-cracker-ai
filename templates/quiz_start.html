@@ -1,0 +1,36 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz - Exam Creacker AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="journal-body">
+    <div class="container journal-container">
+        <h1>Quiz Yourself</h1>
+        <p class="journal-note">Type any topic. Get a quiz made just for you. </p>
+
+        {% if error %}
+            <p style="color:#B5652D; font-weight:500;">⚠️ {{ error }}</p>
+        {% endif %}
+
+        <form method="POST" class="glass-card">
+            <label style="color:#B5652D;">Topic</label>
+            <input type="text" name="topic" placeholder="e.g. Photosynthesis, World War 2, SQL Joins" required>
+
+            <lable style="color:#B5652D;">Number of questions</lable>
+            <input type="number" name="num_questions" value="5" min="3" max="10">
+
+            <lable style="color:#B5652D">Difficulty</lable>
+            <select name="difficulty" style="width:100%; padding:0.6rem; border-radius: 8px; background: rgba(255,253,248,0.12); border: 1px solid rgba(232,217,181,0.15); color:#E8D9B5">
+                <option value="easy" style="color:darkolivegreen">Easy</option>
+                <option style="color:darkolivegreen" value="medium" selected>Medium</option>
+                <option value="hard" style="color:darkolivegreen">Hard</option>
+            </select>
+
+            <button type="submit" class="cta-btn">Generate Quiz</button>
+        </form>
+
+        <p><a href="/" class="cta-btn">Back to home</a></p>
+    </div>
+</body>
+</html>

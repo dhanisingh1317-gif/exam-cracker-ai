@@ -163,7 +163,93 @@ def log_time():
 def resources():
     return render_template('resources.html')
 
+from quiz import generate_quiz
+@app.route('/quiz', methods=['GET', 'POST'])
+def quiz_start():
+    if request.method == 'POST':
+        topic = request.form.get('topic', '').strip()
+        num_questions = int(request.form.get('num_questions', 5))
+        difficulty = request.form.get('difficulty', 'medium')
+
+        if not topic:
+            return render_template('quiz_start.html', error="Please enter a topic.")
+        
+        questions, error = generate_quiz(topic, num_questions, difficulty)
+        if error:
+            return render_template('quiz_start.html', error=error)
+        
+        session['quiz_topic'] = topic
+        session['quiz_questions'] = questions
+        session['quiz_answer'] = {}
+
+        return redirect(url_for('quiz_take'))
+    return render_template('quiz_start.html', error=None)
+
+@app.route('/quiz/take')
+def quiz_take():
+    questions = session.get('quiz_questions')
+    if not questions:
+        return redirect(url_for('quiz_start'))
+    return render_template('quiz_take.html', topic=session.get('quiz_topic'), questions=questions)
+
+@app.route('/quiz/grade', methods=['POST'])
+def quiz_grade():
+    questions = session.get('quiz_questions')
+    if not questions:
+        return redirect(url_for('quiz_starter'))
+    
+    results = []
+    score = 0
+    for i, q in enumerate(questions):
+        submitted = request.form.get(f'q{i}')
+        submitted_index = int(submitted) if submitted is not None else -1
+        is_correct = submitted_index == q['correct_index']
+        if is_correct:
+            score += 1
+        results.append({
+            "question": q['question'],
+            "options": q['options'],
+            "submitted_index": submitted_index,
+            "correct_index": q['correct_index'],
+            "is_correct": is_correct,
+            "explanation": q['explanation']
+        })
+
+    total = len(questions)
+    percent = int((score/total) * 100) if total > 0 else 0
+
+    return render_template('quiz_result.html', topic=session.get('quiz_topic'), results=results, score=score, total=total, percent=percent)
+
+from spotify_auth import get_auth_url, exchange_code_for_token, refresh_access_token
+import time
+
+@app.route('/spotif/login')
+def spotify_login():
+    return redirect(get_auth_url())
+
+@app.route('/spotify/callback')
+def spotify_callback():
+    code = request.args.get('code')
+    error = request.args.get('error')
+
+    if error:
+        return f"Spotify login failed: {error}", 400
+
+    token_data = exchange_code_for_token(code)
+
+    if 'access_token' not in token_data:
+        return f"Token exchange failed: {token_data}", 400
+    
+    session['spotify_access_token'] = token_data['access_token']
+    session['spotify_refresh_token'] = token_data['refresh_token']
+    session['spotify_token_expires'] = time.time() + token_data['expires_in']
+
+    return redirect(url_for('spotify_login'))
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5050))
     app.run(host='0.0.0.0', port=port)
 
+# MAKE a cusom topic chatbot - get API keys 
+# create environment, conditions
+# Routes + gerneration form
